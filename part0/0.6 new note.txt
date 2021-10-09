@@ -1,0 +1,13 @@
+title New note SPA
+
+note over browser:
+browser executes form.onsubmit function that
+1. prevent the default behavior
+2. create a new note and add it to notes
+3. clear the input field
+4. redraw the notes list
+5. finally, sends the new note to the server
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: {"message":"note created"}
