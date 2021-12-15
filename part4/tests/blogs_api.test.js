@@ -51,7 +51,8 @@ test('a new blog is created successfully', async () => {
     
     const response = await api.get('/api/blogs')
 
-    expect(response.body).toHaveLength(initialBlogs.length+1)
+    expect(response.body).toHaveLength(initialBlogs.length + 1)
+    expect(response.body[initialBlogs.length].likes).toBe(0)
     
 }, 10000)
 

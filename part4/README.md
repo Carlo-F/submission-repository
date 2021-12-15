@@ -11,7 +11,7 @@
 - [x] 4.8 Blog list tests, step1
 - [x] 4.9 Blog list tests, step2
 - [x] 4.10 Blog list tests, step3
-- [ ] 4.11 Blog list tests, step4
+- [x] 4.11 Blog list tests, step4
 - [ ] 4.12 Blog list tests, step5
 - [ ] 4.13 Blog list expansions, step1
 - [ ] 4.14 Blog list expansions, step2
