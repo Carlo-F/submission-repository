@@ -41,6 +41,7 @@ test('a new blog is created successfully', async () => {
     const newBlog = {
         "title": "A new fresh blog",
         "author": "Mario",
+        "url": "http://localhost"
     }
 
     await api
@@ -52,9 +53,39 @@ test('a new blog is created successfully', async () => {
     const response = await api.get('/api/blogs')
 
     expect(response.body).toHaveLength(initialBlogs.length + 1)
+    
+}, 10000)
+
+test('missing likes property is set to zero', async () => {
+    const newBlog = {
+        "title": "A new fresh blog",
+        "author": "Mario",
+        "url": "http://localhost"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+    
+    const response = await api.get('/api/blogs')
+
     expect(response.body[initialBlogs.length].likes).toBe(0)
     
 }, 10000)
+
+test('400 bad request is returned if title and url properties are missing', async () => {
+    const newBlog = {
+        "author": "Mario D.",
+        "likes": 43,
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+})
 
 afterAll(() => {
     mongoose.connection.close()
