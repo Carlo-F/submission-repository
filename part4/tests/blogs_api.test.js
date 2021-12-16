@@ -5,6 +5,7 @@ const api = supertest(app)
 const Blogs = require('../models/blogs')
 const initialBlogs = [
     {
+        "_id": '61bb12c0438f82e0044c96ca',
         "title": "The first Blog",
         "author": "IT's ME!"
     },
@@ -86,6 +87,19 @@ test('400 bad request is returned if title and url properties are missing', asyn
         .send(newBlog)
         .expect(400)
 })
+
+test('deleting a blog', async () => {
+    const id = '61bb12c0438f82e0044c96ca'
+
+    await api
+        .delete(`/api/blogs/${id}`)
+        .expect(204)
+    
+    const response = await api.get('/api/blogs')
+
+    expect(response.body).toHaveLength(initialBlogs.length-1)
+    
+}, 10000)
 
 afterAll(() => {
     mongoose.connection.close()
