@@ -7,13 +7,17 @@ const initialBlogs = [
     {
         "_id": '61bb12c0438f82e0044c96ca',
         "title": "The first Blog",
-        "author": "IT's ME!"
+        "author": "IT's ME!",
+        "user": "61c357fc853e884af9008a5b"
     },
     {
         "title": "The second Blog",
-        "author": "IT's still ME!"
+        "author": "IT's still ME!",
+        "user": "61c357fc853e884af9008a5b"
     }
 ]
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Impva2VyIiwiaWQiOiI2MWMzNTdmYzg1M2U4ODRhZjkwMDhhNWIiLCJpYXQiOjE2NDAyNjU4MTB9.oMbaKhceBAc1BiYIFtvSYMNaEV1ZaUlvJbJMYvnyjPo"
 
 beforeEach(async () => {
     await Blogs.deleteMany({})
@@ -42,11 +46,13 @@ test('a new blog is created successfully', async () => {
     const newBlog = {
         "title": "A new fresh blog",
         "author": "Mario",
-        "url": "http://localhost"
+        "url": "http://localhost",
+        "user": "61c357fc853e884af9008a5b"
     }
 
     await api
         .post('/api/blogs')
+        .set({ Authorization: `bearer ${token}` })
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -61,11 +67,13 @@ test('missing likes property is set to zero', async () => {
     const newBlog = {
         "title": "A new fresh blog",
         "author": "Mario",
-        "url": "http://localhost"
+        "url": "http://localhost",
+        "user": "61c357fc853e884af9008a5b"
     }
 
     await api
         .post('/api/blogs')
+        .set({ Authorization: `bearer ${token}` })
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -80,10 +88,12 @@ test('400 bad request is returned if title and url properties are missing', asyn
     const newBlog = {
         "author": "Mario D.",
         "likes": 43,
+        "user": "61c357fc853e884af9008a5b"
     }
 
     await api
         .post('/api/blogs')
+        .set({ Authorization: `bearer ${token}` })
         .send(newBlog)
         .expect(400)
 })
@@ -93,6 +103,7 @@ test('deleting a blog', async () => {
 
     await api
         .delete(`/api/blogs/${id}`)
+        .set({ Authorization: `bearer ${token}` })
         .expect(204)
     
     const response = await api.get('/api/blogs')
@@ -100,6 +111,19 @@ test('deleting a blog', async () => {
     expect(response.body).toHaveLength(initialBlogs.length-1)
     
 }, 10000)
+
+test('401 unauthorized is returned if a token is not provided', async () => {
+    const newBlog = {
+        "author": "Mario D.",
+        "likes": 43,
+        "user": "61c357fc853e884af9008a5b"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(401)
+})
 
 afterAll(() => {
     mongoose.connection.close()

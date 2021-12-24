@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 const tokenExtractor = (request, response, next) => {
 
   const authorization = request.get('authorization')
@@ -7,6 +9,18 @@ const tokenExtractor = (request, response, next) => {
     request.token = null
   }
     
+  next()
+}
+
+const userExtractor = (request, response, next) => {
+
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  if (!request.token || !decodedToken.id) {
+    request.user = null
+  } else {
+    request.user = decodedToken
+  }
   next()
 }
 
@@ -25,7 +39,8 @@ const errorHandler = (error, request, response, next) => {
 }
 
 module.exports = {
-    tokenExtractor,
-    unknownEndpoint,
-    errorHandler
+  tokenExtractor,
+  userExtractor,
+  unknownEndpoint,
+  errorHandler
 }
