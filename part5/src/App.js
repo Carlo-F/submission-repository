@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -11,6 +12,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,18 +33,26 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
 
-    const user = await loginService.login({
-      username, password,
-    })
+    try {
+      const user = await loginService.login({
+        username, password,
+      })
 
-    window.localStorage.setItem(
-      'loggedBlogappUser', JSON.stringify(user)
-    )
+      window.localStorage.setItem(
+        'loggedBlogappUser', JSON.stringify(user)
+      )
 
-    blogService.setToken(user.token)
-    setUser(user)
-    setUsername('')
-    setPassword('')
+      blogService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setMessage('Wrong username or password')
+      setTimeout(() => {
+        setMessage(null)
+      },2000)
+    }
+    
 
   }
 
@@ -55,21 +65,31 @@ const App = () => {
 
   const addBlog = async (event) => {
     event.preventDefault()
-    const newBlog = {
-      title: title,
-      author: author,
-      url: url
-    }
-    const response = await blogService.create(newBlog)
+    try {
+      const newBlog = {
+        title: title,
+        author: author,
+        url: url
+      }
+      const response = await blogService.create(newBlog)
 
-    const blogs = await blogService.getAll()
-    setBlogs(blogs)
+      const blogs = await blogService.getAll()
+      setBlogs(blogs)
+      setMessage('New blog added!')
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    } catch (exception) {
+      console.log(exception)
+    }
+
   }
 
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={message} />
         <form onSubmit={handleLogin}>
         <div>
           username
@@ -98,6 +118,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={message} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <form onSubmit={addBlog}>
         <div>
