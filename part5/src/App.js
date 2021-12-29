@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import AddBlogForm from './components/AddBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -13,6 +14,7 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [message, setMessage] = useState(null)
+  const [addBlogVisible, setAddBlogVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -115,41 +117,30 @@ const App = () => {
     )
   }
 
+  const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
+  const showWhenVisible = { display: addBlogVisible ? '' : 'none' }
+
   return (
     <div>
       <h2>blogs</h2>
       <Notification message={message} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
-      <form onSubmit={addBlog}>
-        <div>
-          title:
-            <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author:
-            <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url:
-            <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type="submit">create</button>
-      </form>
+      <div style={hideWhenVisible}>
+        <button onClick={() => setAddBlogVisible(true)}>create new blog</button>
+      </div>
+      <div style={showWhenVisible}>
+        <AddBlogForm
+          addBlog={addBlog}
+          title={title}
+          author={author}
+          url={url}
+          handleTitleChange={({ target }) => setTitle(target.value)}
+          handleAuthorChange={({ target }) => setAuthor(target.value)}
+          handleUrlChange={({ target }) => setUrl(target.value)}
+        />
+        <button onClick={() => setAddBlogVisible(false)}>cancel</button>
+      </div>
+      
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
