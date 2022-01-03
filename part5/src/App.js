@@ -63,7 +63,7 @@ const App = () => {
   }
 
   const addBlog = async (blogObject) => {
-    const response = await blogService.create(blogObject)
+    await blogService.create(blogObject)
 
     const blogs = await blogService.getAll()
     setBlogs(blogs)
@@ -71,6 +71,21 @@ const App = () => {
     setTimeout(() => {
       setMessage(null)
     }, 5000)
+  }
+
+  const removeBlog = async (blogId) => {
+    await blogService.deleteBlog(blogId)
+
+    const blogs = await blogService.getAll()
+    setBlogs(blogs)
+    setMessage('Blog removed!')
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+
+  const sortBlogsByLikes = function (a, b) {
+    return a.likes - b.likes
   }
 
   if (user === null) {
@@ -119,8 +134,8 @@ const App = () => {
         <button onClick={() => setAddBlogVisible(false)}>cancel</button>
       </div>
       
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.sort(sortBlogsByLikes).map(blog =>
+        <Blog key={blog.id} blog={blog} username={user.username} cancelBlog={removeBlog} />
       )}
     </div>
   )
