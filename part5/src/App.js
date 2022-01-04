@@ -16,7 +16,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -51,13 +51,13 @@ const App = () => {
         setMessage(null)
       },2000)
     }
-    
+
 
   }
 
   const handleLogout = async (event) => {
     event.preventDefault()
-    
+
     setUser(null)
     window.localStorage.removeItem('loggedBlogappUser')
   }
@@ -94,26 +94,26 @@ const App = () => {
         <h2>Log in to application</h2>
         <Notification message={message} />
         <form onSubmit={handleLogin}>
-        <div>
+          <div>
           username
             <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+          <div>
           password
             <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+          <button type="submit">login</button>
+        </form>
       </div>
     )
   }
@@ -133,7 +133,7 @@ const App = () => {
         <AddBlogForm createBlog={addBlog} />
         <button onClick={() => setAddBlogVisible(false)}>cancel</button>
       </div>
-      
+
       {blogs.sort(sortBlogsByLikes).map(blog =>
         <Blog key={blog.id} blog={blog} username={user.username} cancelBlog={removeBlog} />
       )}

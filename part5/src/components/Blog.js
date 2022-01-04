@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, username, cancelBlog }) => {
-  const [blogLikes, setLikes] = useState(blog.likes??0)
+  const [blogLikes, setLikes] = useState(blog.likes)
   const [blogDetailsVisible, setBlogDetailsVisible] = useState(false)
   const showWhenVisible = { display: blogDetailsVisible ? '' : 'none' }
 
@@ -10,7 +11,7 @@ const Blog = ({ blog, username, cancelBlog }) => {
 
     try {
       setLikes(blogLikes + 1)
-      
+
       const updatedBlog = {
         user: blog.user.id,
         title: blog.title,
@@ -32,12 +33,12 @@ const Blog = ({ blog, username, cancelBlog }) => {
       if (window.confirm('delete?')) {
         cancelBlog(blog.id)
       }
-      
+
     } catch (exception) {
       console.log(exception)
     }
   }
-      
+
   return (
     <div>
       <p>
@@ -49,12 +50,16 @@ const Blog = ({ blog, username, cancelBlog }) => {
         <li>url: {blog.url}</li>
         <li>likes: {blogLikes} <button onClick={() => addLike()}>like</button></li>
         {blog.user.username === username && (
-        <li><button onClick={() => removeBlog()}>delete</button></li>
+          <li><button onClick={() => removeBlog()}>delete</button></li>
         )}
       </ul>
 
     </div>
   )
+}
+
+Blog.propTypes = {
+  username: PropTypes.string.isRequired
 }
 
 export default Blog

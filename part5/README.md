@@ -11,3 +11,5 @@
 - [x] 5.8 bloglist frontend step 8
 - [x] 5.9 bloglist frontend step 9
 - [x] 5.10 bloglist frontend step 10
+- [x] 5.11 bloglist frontend step 11
+- [x] 5.12 bloglist frontend step 12
