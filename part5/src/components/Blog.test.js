@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import Blog from './Blog'
 
@@ -18,6 +18,8 @@ describe('<Blog />', () => {
     url: '',
     likes: 0
   }
+
+  const mockHandler = jest.fn()
 
   beforeEach(() => {
     component = render(
@@ -36,5 +38,13 @@ describe('<Blog />', () => {
     const ul = component.container.querySelector('.togglableContent')
 
     expect(ul).toHaveStyle('display: none')
+  })
+
+  test('blog\'s url and likes are shown after show button is clicked', () => {
+    const ul = component.container.querySelector('.togglableContent')
+    const button = component.getByText('show details')
+    fireEvent.click(button)
+
+    expect(ul).toHaveStyle('display: block')
   })
 })
