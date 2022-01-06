@@ -73,6 +73,10 @@ const App = () => {
     }, 5000)
   }
 
+  const addLike = async (blogObject) => {
+    await blogService.update(blogObject, blogObject.id)
+  }
+
   const removeBlog = async (blogId) => {
     await blogService.deleteBlog(blogId)
 
@@ -135,7 +139,7 @@ const App = () => {
       </div>
 
       {blogs.sort(sortBlogsByLikes).map(blog =>
-        <Blog key={blog.id} blog={blog} username={user.username} cancelBlog={removeBlog} />
+        <Blog key={blog.id} blog={blog} username={user.username} cancelBlog={removeBlog} incrementLike={addLike} />
       )}
     </div>
   )

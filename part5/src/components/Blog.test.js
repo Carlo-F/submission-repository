@@ -9,6 +9,7 @@ describe('<Blog />', () => {
   let component
 
   const blog = {
+    id: 'dew4',
     user: {
       id: '1bg43',
       username: 'joker',
@@ -23,7 +24,7 @@ describe('<Blog />', () => {
 
   beforeEach(() => {
     component = render(
-      <Blog blog={blog} username='joker' />
+      <Blog blog={blog} username='joker' incrementLike={mockHandler} />
     )
   })
 
@@ -46,5 +47,13 @@ describe('<Blog />', () => {
     fireEvent.click(button)
 
     expect(ul).toHaveStyle('display: block')
+  })
+
+  test('like button is clicked twice', () => {
+    const button = component.container.querySelector('.likeButton')
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 })

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, username, cancelBlog }) => {
+const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
   const [blogLikes, setLikes] = useState(blog.likes)
   const [blogDetailsVisible, setBlogDetailsVisible] = useState(false)
   const showWhenVisible = { display: blogDetailsVisible ? '' : 'none' }
@@ -13,6 +12,7 @@ const Blog = ({ blog, username, cancelBlog }) => {
       setLikes(blogLikes + 1)
 
       const updatedBlog = {
+        id: blog.id,
         user: blog.user.id,
         title: blog.title,
         author: blog.author,
@@ -20,7 +20,7 @@ const Blog = ({ blog, username, cancelBlog }) => {
         likes: blogLikes + 1
       }
 
-      await blogService.update(updatedBlog, blog.id)
+      incrementLike(updatedBlog)
 
     } catch (exception) {
       console.log(exception)
@@ -48,7 +48,7 @@ const Blog = ({ blog, username, cancelBlog }) => {
       <ul style={showWhenVisible} className="togglableContent">
         <li>author: {blog.author}</li>
         <li>url: {blog.url}</li>
-        <li>likes: {blogLikes} <button onClick={() => addLike()}>like</button></li>
+        <li>likes: {blogLikes} <button className="likeButton" onClick={() => addLike()}>like</button></li>
         {blog.user.username === username && (
           <li><button onClick={() => removeBlog()}>delete</button></li>
         )}
