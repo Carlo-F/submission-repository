@@ -16,4 +16,4 @@
 - [x] 5.13 bloglist tests, step 1
 - [x] 5.14 bloglist tests, step 2
 - [x] 5.15 bloglist tests, step 3
-- [ ] 5.16 bloglist tests, step 4
+- [x] 5.16 bloglist tests, step 4
