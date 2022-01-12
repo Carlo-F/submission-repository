@@ -48,7 +48,7 @@ const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
       <ul style={showWhenVisible} className="togglableContent">
         <li>author: {blog.author}</li>
         <li>url: {blog.url}</li>
-        <li>likes: {blogLikes} <button className="likeButton" onClick={() => addLike()}>like</button></li>
+        <li>likes: <span className="likes">{blogLikes}</span> <button className="likeButton" onClick={() => addLike()}>like</button></li>
         {blog.user.username === username && (
           <li><button onClick={() => removeBlog()}>delete</button></li>
         )}
