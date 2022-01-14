@@ -40,26 +40,54 @@ describe('Blog app', function () {
     })
 
     it('A blog can be created', function () {
-      cy.contains('create new blog').click()
-      cy.get('#title').clear().type('Batman begins')
-      cy.get('#author').clear().type('joker')
-      cy.get('#url').clear().type('www.joker.com')
-      cy.get('#create-button').click()
+      cy.createBlog({
+        title: 'Batman begins',
+        author: 'joker',
+        url: 'www.joker.com'
+      })
 
       cy.contains('Batman begins by joker')
     })
 
     it('A blog can be liked', function () {
-      cy.contains('create new blog').click()
-      cy.get('#title').clear().type('Batman begins')
-      cy.get('#author').clear().type('joker')
-      cy.get('#url').clear().type('www.joker.com')
-      cy.get('#create-button').click()
+      cy.createBlog({
+        title: 'Batman begins',
+        author: 'joker',
+        url: 'www.joker.com'
+      })
 
       cy.contains('show details').click()
       cy.contains('like').click()
 
       cy.get('.likes').should('contain', 1)
+    })
+
+    it('A blog can be deleted', function () {
+      cy.createBlog({
+        title: 'Batman begins',
+        author: 'joker',
+        url: 'www.joker.com'
+      })
+
+      cy.contains('show details').click()
+      cy.contains('delete').click()
+
+      cy.contains('Blog removed!')
+    })
+
+    it.only('The blogs are ordered by likes', function () {
+      cy.createBlog({
+        title: 'Batman begins',
+        author: 'joker',
+        url: 'www.joker.com'
+      })
+      cy.createBlog({
+        title: 'Batman return',
+        author: 'joker',
+        url: 'www.joker.com'
+      })
+
+      //finire
     })
   })
 })

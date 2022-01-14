@@ -21,5 +21,5 @@
 - [x] 5.18: bloglist end to end testing, step2
 - [x] 5.19: bloglist end to end testing, step3
 - [x] 5.20: bloglist end to end testing, step4
-- [ ] 5.21: bloglist end to end testing, step5
+- [x] 5.21: bloglist end to end testing, step5
 - [ ] 5.22: bloglist end to end testing, step6
