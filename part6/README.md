@@ -9,6 +9,6 @@
 - [x] 6.7 anecdotes, step5
 - [x] 6.8 anecdotes, step6
 - [x] 6.9 better anecdotes, step7
-- [ ] 6.10 better anecdotes, step8
-- [ ] 6.11 better anecdotes, step9
+- [x] 6.10 better anecdotes, step8
+- [x] 6.11 better anecdotes, step9
 - [ ] 6.12 better anecdotes, step10
