@@ -11,4 +11,6 @@
 - [x] 6.9 better anecdotes, step7
 - [x] 6.10 better anecdotes, step8
 - [x] 6.11 better anecdotes, step9
-- [ ] 6.12 better anecdotes, step10
+- [x] 6.12 better anecdotes, step10
+- [ ] 6.13 Anecdotes and the backend, step1
+- [ ] 6.14 Anecdotes and the backend, step2
