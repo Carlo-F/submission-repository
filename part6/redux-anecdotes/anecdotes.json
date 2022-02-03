@@ -33,12 +33,27 @@
     {
       "id": "yNB2ly7",
       "content": "New Anecdote not very funny",
-      "votes": 13
+      "votes": 15
     },
     {
       "id": "yIepYej",
       "content": "A new anecdote with 10 seconds notification",
       "votes": 2
+    },
+    {
+      "id": "U0yHIC1",
+      "content": "New Anecdote 50% funny",
+      "votes": 1
+    },
+    {
+      "content": "ss nazi",
+      "votes": 0,
+      "id": "3fMytbF"
+    },
+    {
+      "content": "Waffen SS",
+      "votes": 0,
+      "id": "L3OQxoj"
     }
   ]
 }
