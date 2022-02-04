@@ -3,12 +3,12 @@
     {
       "id": "21149",
       "content": "Adding manpower to a late software project makes it later!",
-      "votes": 3
+      "votes": 7
     },
     {
-      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
       "id": "69581",
-      "votes": 0
+      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+      "votes": 1
     },
     {
       "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
@@ -16,9 +16,9 @@
       "votes": 0
     },
     {
-      "content": "Premature optimization is the root of all evil.",
       "id": "25170",
-      "votes": 0
+      "content": "Premature optimization is the root of all evil.",
+      "votes": 1
     },
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
@@ -26,34 +26,19 @@
       "votes": 0
     },
     {
-      "content": "sss",
-      "votes": 0,
-      "id": "czOsGI3"
-    },
-    {
-      "id": "yNB2ly7",
-      "content": "New Anecdote not very funny",
-      "votes": 15
-    },
-    {
-      "id": "yIepYej",
-      "content": "A new anecdote with 10 seconds notification",
-      "votes": 2
-    },
-    {
       "id": "U0yHIC1",
       "content": "New Anecdote 50% funny",
+      "votes": 3
+    },
+    {
+      "id": "4HmkTve",
+      "content": "A new anecdote with 10 seconds notification",
       "votes": 1
     },
     {
-      "content": "ss nazi",
+      "content": "New Anecdote not very funny",
       "votes": 0,
-      "id": "3fMytbF"
-    },
-    {
-      "content": "Waffen SS",
-      "votes": 0,
-      "id": "L3OQxoj"
+      "id": "aIKb3pg"
     }
   ]
 }
