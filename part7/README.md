@@ -6,5 +6,5 @@
 - [x] 7.4 anecdotes and hooks, step1
 - [x] 7.5 anecdotes and hooks, step2
 - [x] 7.6 anecdotes and hooks, step3
-- [ ] 7.7 country hook
+- [x] 7.7 country hook
 - [ ] 7.8 ultimate hooks
