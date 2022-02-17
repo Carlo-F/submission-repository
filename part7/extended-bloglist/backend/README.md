@@ -1,6 +1,5 @@
 # Exercises of part 4
 
-
 - [x] 4.1 bloglist step 1
 - [x] 4.2 bloglist step 2
 - [x] 4.3 helper functions and unit tests, step1

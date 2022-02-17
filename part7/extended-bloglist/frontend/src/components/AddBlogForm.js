@@ -1,34 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 const AddBlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
 
   const handleTitleChange = (event) => {
-    setTitle(event.target.value)
-  }
+    setTitle(event.target.value);
+  };
   const handleAuthorChange = (event) => {
-    setAuthor(event.target.value)
-  }
+    setAuthor(event.target.value);
+  };
   const handleUrlChange = (event) => {
-    setUrl(event.target.value)
-  }
+    setUrl(event.target.value);
+  };
 
   const addBlog = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
-
       createBlog({
         title: title,
         author: author,
-        url: url
-      })
+        url: url,
+      });
     } catch (exception) {
-      console.log(exception)
+      console.log(exception);
     }
-
-  }
+  };
 
   return (
     <div className="addBlogFormDiv">
@@ -63,10 +61,12 @@ const AddBlogForm = ({ createBlog }) => {
             onChange={handleUrlChange}
           />
         </div>
-        <button id="create-button" type="submit">create</button>
+        <button id="create-button" type="submit">
+          create
+        </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddBlogForm
+export default AddBlogForm;

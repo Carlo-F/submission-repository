@@ -8,7 +8,7 @@
 - [x] 7.6 anecdotes and hooks, step3
 - [x] 7.7 country hook
 - [x] 7.8 ultimate hooks
-- [ ] 7.9 automatic code formatting
+- [x] 7.9 automatic code formatting
 - [ ] 7.10 redux, step1
 - [ ] 7.11 redux, step2
 - [ ] 7.12 redux, step3
