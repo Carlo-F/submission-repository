@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import AddBlogForm from "./components/AddBlogForm";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import { createMessage, removeMessage } from './reducers/notificationReducer';
+
+let timeoutID;
 
 const App = () => {
+  const dispatch = useDispatch();
+  const message = useSelector(state => state);
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
   const [addBlogVisible, setAddBlogVisible] = useState(false);
 
   useEffect(() => {
@@ -43,9 +48,10 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      setMessage("Wrong username or password");
-      setTimeout(() => {
-        setMessage(null);
+      dispatch(createMessage('Wrong username or password'));
+      clearTimeout(timeoutID);
+      timeoutID = setTimeout(() => {
+        dispatch(removeMessage());
       }, 2000);
     }
   };
@@ -62,14 +68,20 @@ const App = () => {
 
     const blogs = await blogService.getAll();
     setBlogs(blogs);
-    setMessage("New blog added!");
-    setTimeout(() => {
-      setMessage(null);
+    dispatch(createMessage('new blog added!'));
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      dispatch(removeMessage());
     }, 5000);
   };
 
   const addLike = async (blogObject) => {
     await blogService.update(blogObject, blogObject.id);
+    dispatch(createMessage('Blog liked!'));
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      dispatch(removeMessage());
+    }, 2000);
   };
 
   const removeBlog = async (blogId) => {
@@ -77,9 +89,10 @@ const App = () => {
 
     const blogs = await blogService.getAll();
     setBlogs(blogs);
-    setMessage("Blog removed!");
-    setTimeout(() => {
-      setMessage(null);
+    dispatch(createMessage('blog removed!'));
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      dispatch(removeMessage());
     }, 5000);
   };
 
