@@ -6,21 +6,24 @@ import AddBlogForm from "./components/AddBlogForm";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import { createMessage, removeMessage } from './reducers/notificationReducer';
+import { setBlogs, createBlog, deleteBlog } from './reducers/blogReducer';
 
 let timeoutID;
 
 const App = () => {
   const dispatch = useDispatch();
-  const message = useSelector(state => state);
-  const [blogs, setBlogs] = useState([]);
+  const message = useSelector(state => state.message);
+  const blogs = useSelector(state => state.blogs);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [addBlogVisible, setAddBlogVisible] = useState(false);
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
+    blogService
+      .getAll()
+        .then(blogs => dispatch(setBlogs(blogs)))
+  }, [dispatch]);
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("loggedBlogappUser");
@@ -63,18 +66,6 @@ const App = () => {
     window.localStorage.removeItem("loggedBlogappUser");
   };
 
-  const addBlog = async (blogObject) => {
-    await blogService.create(blogObject);
-
-    const blogs = await blogService.getAll();
-    setBlogs(blogs);
-    dispatch(createMessage('new blog added!'));
-    clearTimeout(timeoutID);
-    timeoutID = setTimeout(() => {
-      dispatch(removeMessage());
-    }, 5000);
-  };
-
   const addLike = async (blogObject) => {
     await blogService.update(blogObject, blogObject.id);
     dispatch(createMessage('Blog liked!'));
@@ -84,12 +75,25 @@ const App = () => {
     }, 2000);
   };
 
-  const removeBlog = async (blogId) => {
-    await blogService.deleteBlog(blogId);
+  const addBlog = async (blogObject) => {
+    const newBlog = await blogService.create(blogObject);
 
-    const blogs = await blogService.getAll();
-    setBlogs(blogs);
-    dispatch(createMessage('blog removed!'));
+    dispatch(createBlog(newBlog));
+    dispatch(createMessage('new blog added!'));
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      dispatch(removeMessage());
+    }, 5000);
+  };
+
+  const removeBlog = async (blogId) => {
+    //await blogService.deleteBlog(blogId);
+
+    // const blogs = await blogService.getAll();
+    // setBlogs(blogs);
+
+    dispatch(deleteBlog(blogId));
+    dispatch(createMessage(blogId+' blog removed!'));
     clearTimeout(timeoutID);
     timeoutID = setTimeout(() => {
       dispatch(removeMessage());
