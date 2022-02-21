@@ -7,6 +7,7 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 import { createMessage, removeMessage } from './reducers/notificationReducer';
 import { setBlogs, createBlog, deleteBlog, likeBlog } from './reducers/blogReducer';
+import { logInUser, logOutUser } from './reducers/userReducer';
 
 let timeoutID;
 
@@ -14,10 +15,11 @@ const App = () => {
   const dispatch = useDispatch();
   const message = useSelector(state => state.message);
   const blogs = useSelector(state => state.blogs);
-  //gli useState devono sparire
+  const user = useSelector(state => state.user);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+
   const [addBlogVisible, setAddBlogVisible] = useState(false);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const App = () => {
     if (loggedUser) {
       const user = JSON.parse(loggedUser);
       blogService.setToken(user.token);
-      setUser(user);
+      dispatch(logInUser(user));
     }
   }, []);
 
@@ -48,7 +50,7 @@ const App = () => {
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
 
       blogService.setToken(user.token);
-      setUser(user);
+      dispatch(logInUser(user));
       setUsername("");
       setPassword("");
     } catch (exception) {
@@ -63,7 +65,7 @@ const App = () => {
   const handleLogout = async (event) => {
     event.preventDefault();
 
-    setUser(null);
+    dispatch(logOutUser());
     window.localStorage.removeItem("loggedBlogappUser");
   };
 
