@@ -2,24 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
-  const [blogLikes, setLikes] = useState(blog.likes);
+  //const [blogLikes, setLikes] = useState(blog.likes);
   const [blogDetailsVisible, setBlogDetailsVisible] = useState(false);
   const showWhenVisible = { display: blogDetailsVisible ? "" : "none" };
 
   const addLike = async () => {
     try {
-      setLikes(blogLikes + 1);
-
-      const updatedBlog = {
-        id: blog.id,
-        user: blog.user.id,
-        title: blog.title,
-        author: blog.author,
-        url: blog.url,
-        likes: blogLikes + 1,
-      };
-
-      incrementLike(updatedBlog);
+      incrementLike(blog);
     } catch (exception) {
       console.log(exception);
     }
@@ -49,7 +38,7 @@ const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
         <li>author: {blog.author}</li>
         <li>url: {blog.url}</li>
         <li>
-          likes: <span className="likes">{blogLikes}</span>{" "}
+          likes: <span className="likes">{blog.likes}</span>{" "}
           <button className="likeButton" onClick={() => addLike()}>
             like
           </button>

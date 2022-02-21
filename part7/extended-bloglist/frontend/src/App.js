@@ -6,7 +6,7 @@ import AddBlogForm from "./components/AddBlogForm";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import { createMessage, removeMessage } from './reducers/notificationReducer';
-import { setBlogs, createBlog, deleteBlog } from './reducers/blogReducer';
+import { setBlogs, createBlog, deleteBlog, likeBlog } from './reducers/blogReducer';
 
 let timeoutID;
 
@@ -14,6 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
   const message = useSelector(state => state.message);
   const blogs = useSelector(state => state.blogs);
+  //gli useState devono sparire
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -22,7 +23,7 @@ const App = () => {
   useEffect(() => {
     blogService
       .getAll()
-        .then(blogs => dispatch(setBlogs(blogs)))
+      .then(blogs => dispatch(setBlogs(blogs)))
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,7 +68,9 @@ const App = () => {
   };
 
   const addLike = async (blogObject) => {
-    await blogService.update(blogObject, blogObject.id);
+    const likedBlog = await blogService.update({ ...blogObject, likes: blogObject.likes+1 }, blogObject.id);
+
+    dispatch(likeBlog(likedBlog.id));
     dispatch(createMessage('Blog liked!'));
     clearTimeout(timeoutID);
     timeoutID = setTimeout(() => {
@@ -87,13 +90,10 @@ const App = () => {
   };
 
   const removeBlog = async (blogId) => {
-    //await blogService.deleteBlog(blogId);
-
-    // const blogs = await blogService.getAll();
-    // setBlogs(blogs);
+    await blogService.deleteBlog(blogId);
 
     dispatch(deleteBlog(blogId));
-    dispatch(createMessage(blogId+' blog removed!'));
+    dispatch(createMessage('blog removed!'));
     clearTimeout(timeoutID);
     timeoutID = setTimeout(() => {
       dispatch(removeMessage());
