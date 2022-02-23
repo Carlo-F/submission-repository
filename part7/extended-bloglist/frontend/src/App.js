@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Routes, Route, Link, useMatch, useNavigate } from "react-router-dom";
 import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import AddBlogForm from "./components/AddBlogForm";
+import User from "./components/User";
+import Login from "./components/Login";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import userService from "./services/users";
 import { createMessage, removeMessage } from './reducers/notificationReducer';
 import { setBlogs, createBlog, deleteBlog, likeBlog } from './reducers/blogReducer';
 import { logInUser, logOutUser } from './reducers/userReducer';
@@ -19,13 +23,14 @@ const App = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [users, setUsers] = useState([]);
 
   const [addBlogVisible, setAddBlogVisible] = useState(false);
 
   useEffect(() => {
     blogService
       .getAll()
-      .then(blogs => dispatch(setBlogs(blogs)))
+      .then(blogs => dispatch(setBlogs(blogs)));
   }, [dispatch]);
 
   useEffect(() => {
@@ -35,8 +40,20 @@ const App = () => {
       const user = JSON.parse(loggedUser);
       blogService.setToken(user.token);
       dispatch(logInUser(user));
+      userService.getAll().then(users => setUsers(users));
     }
   }, []);
+
+  const match = useMatch('/users/:id');
+  const singleUser = match
+    ? users.find(user => user.id === match.params.id)
+    : null;
+  const blogMatch = useMatch('/blogs/:id');
+  const blog = blogMatch
+    ? blogs.find(blog => blog.id === blogMatch.params.id)
+    : null;
+  
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -53,6 +70,7 @@ const App = () => {
       dispatch(logInUser(user));
       setUsername("");
       setPassword("");
+      navigate("/");
     } catch (exception) {
       dispatch(createMessage('Wrong username or password'));
       clearTimeout(timeoutID);
@@ -67,6 +85,7 @@ const App = () => {
 
     dispatch(logOutUser());
     window.localStorage.removeItem("loggedBlogappUser");
+    navigate("/login");
   };
 
   const addLike = async (blogObject) => {
@@ -106,50 +125,31 @@ const App = () => {
     return a.likes - b.likes;
   };
 
-  if (user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
-        <Notification message={message} />
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              id="username"
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              id="password"
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button id="login-button" type="submit">
-            login
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  const hideWhenVisible = { display: addBlogVisible ? "none" : "" };
-  const showWhenVisible = { display: addBlogVisible ? "" : "none" };
-
-  return (
+  const Users = ({ users }) => (
     <div>
-      <h2>blogs</h2>
-      <Notification message={message} />
-      <p>
-        {user.username} logged in <button onClick={handleLogout}>logout</button>
-      </p>
+      <h2>Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>username</th>
+            <th>blogs created</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td><Link to={`/users/${user.id}`}>{user.name}</Link></td>
+              <td>{user.blogs.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+
+  const Blogs = ({ blogs }) => {
+    return (
+    <div>
       <div style={hideWhenVisible}>
         <button onClick={() => setAddBlogVisible(true)}>create new blog</button>
       </div>
@@ -157,16 +157,58 @@ const App = () => {
         <AddBlogForm createBlog={addBlog} />
         <button onClick={() => setAddBlogVisible(false)}>cancel</button>
       </div>
-
-      {blogs.sort(sortBlogsByLikes).map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          username={user.username}
-          cancelBlog={removeBlog}
-          incrementLike={addLike}
-        />
+        {blogs.sort(sortBlogsByLikes).map((blog) => (
+        <div key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+        </div>
       ))}
+    </div>
+    )
+  }
+
+  if (user === null) {
+    return (
+      <Login
+        message={message}
+        username={username}
+        password={password}
+        handleLogin={handleLogin}
+        handleLogout={handleLogout}
+        setUsername={setUsername}
+        setPassword={setPassword} />
+    );
+  }
+
+  const hideWhenVisible = { display: addBlogVisible ? "none" : "" };
+  const showWhenVisible = { display: addBlogVisible ? "" : "none" };
+  const padding = { paddingRight: "1%" };
+
+  return (
+    <div>
+      <div>
+        <Link style={padding} to="/">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+        {user
+          ? <p><em>{user.username}</em> logged in <button onClick={handleLogout}>logout</button></p>
+          : <Link style={padding} to="/login">login</Link>}
+      </div>
+      <h2>blogs</h2>
+      <Notification message={message} />
+      <Routes>
+        <Route path="/login" element={<Login
+          message={message}
+          username={username}
+          password={password}
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          setUsername={setUsername}
+          setPassword={setPassword} />}
+        />
+        <Route path="/users/:id" element={<User user={singleUser}/>} />
+        <Route path="/users" element={<Users users={users} />} />
+        <Route path="/blogs/:id" element={<Blog blog={blog} username={user.username} incrementLike={addLike} cancelBlog={removeBlog} />} />
+        <Route path="/" element={<Blogs blogs={blogs} />} />
+      </Routes>  
     </div>
   );
 };

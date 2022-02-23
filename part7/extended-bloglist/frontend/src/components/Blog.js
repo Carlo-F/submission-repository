@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
-  //const [blogLikes, setLikes] = useState(blog.likes);
-  const [blogDetailsVisible, setBlogDetailsVisible] = useState(false);
-  const showWhenVisible = { display: blogDetailsVisible ? "" : "none" };
+
+  if (!blog) {
+    return null;
+  }
 
   const addLike = async () => {
     try {
@@ -26,29 +27,22 @@ const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
 
   return (
     <div className="blog">
-      <p>
-        <strong>
-          {blog.title} by {blog.author}
-        </strong>
-        <button onClick={() => setBlogDetailsVisible(!blogDetailsVisible)}>
-          {blogDetailsVisible ? "hide" : "show details"}
-        </button>
-      </p>
-      <ul style={showWhenVisible} className="togglableContent">
-        <li>author: {blog.author}</li>
-        <li>url: {blog.url}</li>
-        <li>
+      <h2>{blog.title}</h2>
+      <div>
+        <p>{blog.url}</p>
+        <p>
           likes: <span className="likes">{blog.likes}</span>{" "}
           <button className="likeButton" onClick={() => addLike()}>
             like
           </button>
-        </li>
+        </p>
+        <p>added by {blog.author}</p>
         {blog.user.username === username && (
-          <li>
+          <p>
             <button onClick={() => removeBlog()}>delete</button>
-          </li>
+          </p>
         )}
-      </ul>
+      </div>
     </div>
   );
 };

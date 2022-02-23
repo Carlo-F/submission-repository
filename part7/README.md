@@ -13,10 +13,10 @@
 - [x] 7.11 redux, step2
 - [x] 7.12 redux, step3
 - [x] 7.13 redux, step4
-- [ ] 7.14 Users view
-- [ ] 7.15 Individual user view
-- [ ] 7.16 Blog view
-- [ ] 7.17 Navigation
+- [x] 7.14 Users view
+- [x] 7.15 Individual user view
+- [x] 7.16 Blog view
+- [x] 7.17 Navigation
 - [ ] 7.18 comments, step1
 - [ ] 7.19 comments, step2
 - [ ] 7.20 Styles, step1
