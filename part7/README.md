@@ -17,7 +17,7 @@
 - [x] 7.15 Individual user view
 - [x] 7.16 Blog view
 - [x] 7.17 Navigation
-- [ ] 7.18 comments, step1
+- [x] 7.18 comments, step1
 - [ ] 7.19 comments, step2
 - [ ] 7.20 Styles, step1
 - [ ] 7.21 Styles, step2

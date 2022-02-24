@@ -42,6 +42,12 @@ const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
             <button onClick={() => removeBlog()}>delete</button>
           </p>
         )}
+        <h4>comments</h4>
+        <ul>
+        {blog.comments.map((comment) => (
+          <li key={comment.id}>{comment.comment}</li>
+        ))}
+        </ul>
       </div>
     </div>
   );
