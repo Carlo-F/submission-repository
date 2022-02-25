@@ -10,7 +10,7 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 import userService from "./services/users";
 import { createMessage, removeMessage } from './reducers/notificationReducer';
-import { setBlogs, createBlog, deleteBlog, likeBlog } from './reducers/blogReducer';
+import { setBlogs, createBlog, deleteBlog, likeBlog, commentBlog } from './reducers/blogReducer';
 import { logInUser, logOutUser } from './reducers/userReducer';
 
 let timeoutID;
@@ -98,6 +98,17 @@ const App = () => {
       dispatch(removeMessage());
     }, 2000);
   };
+
+  const addComment = async ({ blogId, comment }) => {
+    const newComment = await blogService.createComment(blogId, comment);
+
+    dispatch(commentBlog(blogId, newComment));
+    dispatch(createMessage('blog commented!'));
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => {
+      dispatch(removeMessage())
+    }, 5000);
+  }
 
   const addBlog = async (blogObject) => {
     const newBlog = await blogService.create(blogObject);
@@ -206,7 +217,7 @@ const App = () => {
         />
         <Route path="/users/:id" element={<User user={singleUser}/>} />
         <Route path="/users" element={<Users users={users} />} />
-        <Route path="/blogs/:id" element={<Blog blog={blog} username={user.username} incrementLike={addLike} cancelBlog={removeBlog} />} />
+        <Route path="/blogs/:id" element={<Blog blog={blog} username={user.username} incrementLike={addLike} cancelBlog={removeBlog} createComment={addComment} />} />
         <Route path="/" element={<Blogs blogs={blogs} />} />
       </Routes>  
     </div>

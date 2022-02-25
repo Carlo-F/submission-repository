@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import AddCommentForm from "./AddCommentForm";
 
-const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
+const Blog = ({ blog, username, cancelBlog, incrementLike, createComment }) => {
 
   if (!blog) {
     return null;
@@ -43,9 +44,10 @@ const Blog = ({ blog, username, cancelBlog, incrementLike }) => {
           </p>
         )}
         <h4>comments</h4>
+        <AddCommentForm blogId={blog.id} createComment={createComment}/>
         <ul>
         {blog.comments.map((comment) => (
-          <li key={comment.id}>{comment.comment}</li>
+          <li key={comment._id}>{comment.comment}</li>
         ))}
         </ul>
       </div>

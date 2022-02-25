@@ -9,7 +9,12 @@ const blogReducer = (state = [], action) => {
         case 'DELETE_BLOG':
             return state.filter(blog => blog.id !== action.data.id);
         case 'LIKE_BLOG':
-            return state.map(blog => blog.id === action.data.id ? {...blog, likes: blog.likes+1} : blog)
+            return state.map(blog => blog.id === action.data.id ? { ...blog, likes: blog.likes + 1 } : blog)
+        case 'COMMENT_BLOG':
+            return state.map(blog => blog.id === action.data.id
+                ? { ...blog, comments: blog.comments.concat(action.data.comment) } 
+                : blog
+            )
         default:
             return state
     }
@@ -50,6 +55,16 @@ export const likeBlog = (id) => {
         type: 'LIKE_BLOG',
         data: {
             id: id
+        }
+    }
+}
+
+export const commentBlog = (blogId, comment) => {
+    return {
+        type: 'COMMENT_BLOG',
+        data: {
+            id: blogId,
+            comment: comment
         }
     }
 }

@@ -18,6 +18,6 @@
 - [x] 7.16 Blog view
 - [x] 7.17 Navigation
 - [x] 7.18 comments, step1
-- [ ] 7.19 comments, step2
+- [x] 7.19 comments, step2
 - [ ] 7.20 Styles, step1
 - [ ] 7.21 Styles, step2
