@@ -12,6 +12,19 @@ import userService from "./services/users";
 import { createMessage, removeMessage } from './reducers/notificationReducer';
 import { setBlogs, createBlog, deleteBlog, likeBlog, commentBlog } from './reducers/blogReducer';
 import { logInUser, logOutUser } from './reducers/userReducer';
+import {
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button,
+} from '@material-ui/core';
 
 let timeoutID;
 
@@ -167,12 +180,20 @@ const App = () => {
       <div style={showWhenVisible}>
         <AddBlogForm createBlog={addBlog} />
         <button onClick={() => setAddBlogVisible(false)}>cancel</button>
-      </div>
-        {blogs.sort(sortBlogsByLikes).map((blog) => (
-        <div key={blog.id}>
-            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
         </div>
-      ))}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableBody>
+            {blogs.sort(sortBlogsByLikes).map((blog) => (
+              <TableRow key={blog.id}>
+                <TableCell>
+                  <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                  </TableCell>
+              </TableRow>
+            ))}
+              </TableBody>
+          </Table>
+        </TableContainer>
     </div>
     )
   }
@@ -192,18 +213,26 @@ const App = () => {
 
   const hideWhenVisible = { display: addBlogVisible ? "none" : "" };
   const showWhenVisible = { display: addBlogVisible ? "" : "none" };
-  const padding = { paddingRight: "1%" };
 
   return (
-    <div>
-      <div>
-        <Link style={padding} to="/">blogs</Link>
-        <Link style={padding} to="/users">users</Link>
-        {user
-          ? <p><em>{user.username}</em> logged in <button onClick={handleLogout}>logout</button></p>
-          : <Link style={padding} to="/login">login</Link>}
-      </div>
-      <h2>blogs</h2>
+    <Container>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+          </IconButton>
+          <Button color="inherit" component={Link} to="/">
+            blogs
+          </Button>
+          <Button color="inherit" component={Link} to="/users">
+            users
+          </Button> 
+          {user
+            ? <Button onClick={handleLogout}>logout</Button>
+            : <Button color="inherit" component={Link} to="/login">login</Button>
+          }
+        </Toolbar>
+      </AppBar>
+      <h2>Blogs APP</h2>
       <Notification message={message} />
       <Routes>
         <Route path="/login" element={<Login
@@ -220,7 +249,7 @@ const App = () => {
         <Route path="/blogs/:id" element={<Blog blog={blog} username={user.username} incrementLike={addLike} cancelBlog={removeBlog} createComment={addComment} />} />
         <Route path="/" element={<Blogs blogs={blogs} />} />
       </Routes>  
-    </div>
+    </Container>
   );
 };
 

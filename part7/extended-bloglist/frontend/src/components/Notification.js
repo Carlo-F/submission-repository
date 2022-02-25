@@ -1,8 +1,13 @@
 import React from "react";
+import { Alert } from '@material-ui/lab';
 
 const Notification = ({ message }) => (
-  <div id="notification">
-    <p>{message}</p>
+  <div>
+    {(message &&
+    <Alert severity="success">
+      {message}
+    </Alert>
+  )}
   </div>
 );
 
