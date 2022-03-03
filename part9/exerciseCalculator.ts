@@ -8,18 +8,18 @@ interface Result {
     average: number
 }
 
-const parseExerciseArguments = (args: Array<string>) => {
-    if (args.length < 4) throw new Error('Not enough arguments');
+// const parseExerciseArguments = (args: Array<string>) => {
+//     if (args.length < 4) throw new Error('Not enough arguments');
 
-    if (!isNaN(Number(args[2]))) {
-        return {
-        daily_target: Number(args[2]),
-        period: args.slice(3).map(arg => Number(arg))
-        };
-    } else {
-        throw new Error('Provided values were not numbers!');
-    }
-};
+//     if (!isNaN(Number(args[2]))) {
+//         return {
+//         daily_target: Number(args[2]),
+//         period: args.slice(3).map(arg => Number(arg))
+//         };
+//     } else {
+//         throw new Error('Provided values were not numbers!');
+//     }
+// };
 
 const calculateExercises = (period: Array<number>, daily_target: number): Result => {
 
@@ -50,13 +50,15 @@ const calculateExercises = (period: Array<number>, daily_target: number): Result
     };
 };
 
-try {
-    const { daily_target, period } = parseExerciseArguments(process.argv);
-    console.log(calculateExercises(period, daily_target));
-} catch (error: unknown) {
-    let errorMessage = 'Something gone wrong';
-    if (error instanceof Error) {
-        errorMessage += ' Error: ' + error.message;
-    }
-    console.log(errorMessage);
-}
+// try {
+//     const { daily_target, period } = parseExerciseArguments(process.argv);
+//     console.log(calculateExercises(period, daily_target));
+// } catch (error: unknown) {
+//     let errorMessage = 'Something gone wrong';
+//     if (error instanceof Error) {
+//         errorMessage += ' Error: ' + error.message;
+//     }
+//     console.log(errorMessage);
+// }
+
+export default calculateExercises;

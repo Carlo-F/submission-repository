@@ -6,4 +6,4 @@
 - [x] 9.4 Express
 - [x] 9.5 WebBMI
 - [x] 9.6 Eslint
-- [ ] 9.7 WebExercises
+- [x] 9.7 WebExercises
