@@ -15,11 +15,11 @@ const parseExerciseArguments = (args: Array<string>) => {
         return {
         daily_target: Number(args[2]),
         period: args.slice(3).map(arg => Number(arg))
-        }
+        };
     } else {
         throw new Error('Provided values were not numbers!');
     }
-}
+};
 
 const calculateExercises = (period: Array<number>, daily_target: number): Result => {
 
@@ -47,8 +47,8 @@ const calculateExercises = (period: Array<number>, daily_target: number): Result
         ratingDescription: rating_description,
         target: daily_target,
         average: average
-    }
-}
+    };
+};
 
 try {
     const { daily_target, period } = parseExerciseArguments(process.argv);
@@ -58,5 +58,5 @@ try {
     if (error instanceof Error) {
         errorMessage += ' Error: ' + error.message;
     }
-    console.log(errorMessage)
+    console.log(errorMessage);
 }

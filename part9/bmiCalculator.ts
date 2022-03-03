@@ -15,6 +15,6 @@ const calculateBmi = (height: number, weight: number): string => {
         return 'Sovrappeso';
     }
 
-}
+};
 
 export default calculateBmi;
