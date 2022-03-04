@@ -7,3 +7,5 @@
 - [x] 9.5 WebBMI
 - [x] 9.6 Eslint
 - [x] 9.7 WebExercises
+- [ ] 9.8 Patientor backend, step1
+- [ ] 9.9 Patientor backend, step2
