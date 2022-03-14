@@ -1,4 +1,4 @@
-# Exercises of part 9
+# Exercises of part 9 - Typescript
 
 - [x] 9.1 Body mass index
 - [x] 9.2 Exercise calculator
@@ -13,3 +13,5 @@
 - [x] 9.11 Patientor backend, step4
 - [x] 9.12 Patientor backend, step5
 - [x] 9.13 Patientor backend, step6
+- [x] 9.14
+- [ ] 9.15
