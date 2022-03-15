@@ -1,7 +1,7 @@
-const Header = ({courseName}: {courseName: string}) => {
+const Header = ({name}: {name: string}) => {
 
     return (
-        <h1>{courseName}</h1>
+        <h1>{name}</h1>
     );
 }
 

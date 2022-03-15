@@ -1,9 +1,9 @@
-const Total = ({courseParts}: {courseParts: Array<any>}) => {
+const Total = ({parts}: {parts: Array<any>}) => {
     
     return (
         <p>
             Number of exercises{" "}
-            {courseParts.reduce((carry:number, part:any) => carry + part.exerciseCount, 0)}
+            {parts.reduce((carry:number, part:any) => carry + part.exerciseCount, 0)}
         </p>
     );
 }

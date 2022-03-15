@@ -1,15 +1,11 @@
-const Content = ({courseParts}: {courseParts: Array<any>}) => {
+import Part from './Part';
+
+const Content = ({parts}: {parts: Array<any>}) => {
     return (
         <div>
-            <p>
-                {courseParts[0].name} {courseParts[0].exerciseCount}
-            </p>
-            <p>
-                {courseParts[1].name} {courseParts[1].exerciseCount}
-            </p>
-            <p>
-                {courseParts[2].name} {courseParts[2].exerciseCount}
-            </p>
+            <Part part={parts[0]} />
+            <Part part={parts[1]} />
+            <Part part={parts[2]} />
         </div>
     );
 }

@@ -14,4 +14,4 @@
 - [x] 9.12 Patientor backend, step5
 - [x] 9.13 Patientor backend, step6
 - [x] 9.14
-- [ ] 9.15
+- [x] 9.15
