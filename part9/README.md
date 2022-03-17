@@ -15,3 +15,6 @@
 - [x] 9.13 Patientor backend, step6
 - [x] 9.14 Courseinfo
 - [x] 9.15 Courseinfo
+- [x] 9.16 patientor, step1
+- [ ] 9.17 patientor, step2
+- [ ] 9.18 patientor, step3
