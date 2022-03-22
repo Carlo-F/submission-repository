@@ -20,6 +20,7 @@ const addPatient = (entry: newPatientEntry): patientEntry => {
     const id = uuid();
     const newPatient = {
         ...entry,
+        entries: [],
         id: id
     };
 

@@ -1,19 +1,35 @@
-import { newPatientEntry, Gender } from "./types";
+import { newPatientEntry, Gender, Entry, EntryType } from "./types";
 
-type Fields = { name: unknown, dateOfBirth: unknown, ssn: unknown, gender: unknown, occupation: unknown };
+type Fields = { name: unknown, dateOfBirth: unknown, ssn: unknown, gender: unknown, occupation: unknown, entries: Array<Entry> };
 
-const toNewPatientEntry = ({ name, dateOfBirth, ssn, gender, occupation } : Fields): newPatientEntry => {
+const toNewPatientEntry = ({ name, dateOfBirth, ssn, gender, occupation, entries } : Fields): newPatientEntry => {
     const newEntry: newPatientEntry = {
         name: parseName(name),
         dateOfBirth: parseDate(dateOfBirth),
         ssn: parseSsn(ssn),
         gender: parseGender(gender),
         occupation: parseOccupation(occupation),
-        entries: []
+        entries: parseEntries(entries)
     };
 
     return newEntry;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isEntryType = (param: any): param is EntryType => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    return Object.values(EntryType).includes(param);
+};
+
+const parseEntries = (entries: Array<Entry>): Array<Entry> => {
+    entries.forEach(entry => {
+        if(!entry.type || !isEntryType(entry.type)) {
+            throw new Error('Incorrect or missing entry type: ' + entry.type)
+        }
+    });
+
+    return entries;
+}
 
 const parseName = (name: unknown) : string => {
     if (!name || !isString(name)) {
@@ -35,7 +51,7 @@ const parseSsn = (ssn: unknown) : string => {
 const isGender = (param: any): param is Gender => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return Object.values(Gender).includes(param);
-  };
+};
   
   const parseGender = (gender: unknown): Gender => {
     if (!gender || !isGender(gender)) {
