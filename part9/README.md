@@ -21,4 +21,4 @@
 - [x] 9.19 patientor, step4
 - [x] 9.20 patientor, step5
 - [x] 9.21 patientor, step6
-- [ ] 9.22 patientor, step7
+- [x] 9.22 patientor, step7
