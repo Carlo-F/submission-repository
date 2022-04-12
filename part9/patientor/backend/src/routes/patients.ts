@@ -16,7 +16,7 @@ router.get("/:id", (req, res) => {
     } else {
         res.sendStatus(404);
     }
-})
+});
 
 router.post("/", (req, res) => {
     try {
@@ -26,11 +26,23 @@ router.post("/", (req, res) => {
     } catch (error: unknown) {
         let errorMessage = 'Something went wrong.';
         if (error instanceof Error) {
-          errorMessage += ' Error: ' + error.message;
+            errorMessage += ' Error: ' + error.message;
         }
         res.status(400).send(errorMessage);
     }
 
-})
+});
+
+router.post("/:id/entries", (req, res) => {
+    try {
+        res.send(req.body);
+    } catch (error: unknown) {
+        let errorMessage = 'Something went wrong.';
+        if (error instanceof Error) {
+            errorMessage += ' Error: ' + error.message;
+        }
+        res.status(400).send(errorMessage);
+    }
+});
 
 export default router;

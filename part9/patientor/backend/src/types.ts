@@ -45,12 +45,12 @@ interface BaseEntry {
       "OccupationalHealthcare"
   }
   
-  interface HealthCheckEntry extends BaseEntry {
+  export interface HealthCheckEntry extends BaseEntry {
     type: "HealthCheck";
     healthCheckRating: HealthCheckRating;
   }
   
-  interface HospitalEntry extends BaseEntry {
+  export interface HospitalEntry extends BaseEntry {
     type: "Hospital",
     discharge?: {
       date: string,
@@ -58,7 +58,7 @@ interface BaseEntry {
     }
   }
   
-  interface OccupationalHealthcareEntry extends BaseEntry {
+  export interface OccupationalHealthcareEntry extends BaseEntry {
     type: "OccupationalHealthcare",
     employerName: string,
     sickLeave?: {
@@ -71,3 +71,5 @@ interface BaseEntry {
     | HospitalEntry
     | OccupationalHealthcareEntry
     | HealthCheckEntry;
+
+  export type newEntry = Omit<Entry,'id'>;
