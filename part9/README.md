@@ -23,7 +23,7 @@
 - [x] 9.21 patientor, step6
 - [x] 9.22 patientor, step7
 - [x] 9.23 patientor, step8
-- [ ] 9.24 patientor, step8
-- [ ] 9.25 patientor, step10
+- [ ] 9.24 patientor, step9
+- [x] 9.25 patientor, step10
 - [ ] 9.26 patientor, step11
 - [ ] 9.27 patientor, step12
